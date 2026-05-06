@@ -2,27 +2,27 @@
 <rss version="2.0">
     <channel>
       <title>LoveTrueGlory</title>
-      <link>https://gjlsx.github.io</link>
+      <link>https://wiki.lovemoney.live</link>
       <description>最近的10条笔记 on LoveTrueGlory</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>標籤與模板初稿</title>
-    <link>https://gjlsx.github.io/plans/pkm-tags-and-templates</link>
-    <guid>https://gjlsx.github.io/plans/pkm-tags-and-templates</guid>
-    <description><![CDATA[ 標籤與模板初稿 日期：2026-05-02 此文檔是 個人任務與知識庫系統初步方案 的配套文件，目的是先定義： 標籤文件怎麼寫 Obsidian 索引卡怎麼寫 任務文件怎麼寫 每日記錄怎麼寫 1. ]]></description>
-    <pubDate>Sun, 03 May 2026 09:13:19 GMT</pubDate>
+    <title>LoveTrueGlory</title>
+    <link>https://wiki.lovemoney.live/</link>
+    <guid>https://wiki.lovemoney.live/</guid>
+    <description><![CDATA[ 個人任務、知識整理與 Quartz 發佈入口 ]]></description>
+    <pubDate>Wed, 06 May 2026 18:41:08 GMT</pubDate>
   </item><item>
     <title>PKM + Quartz 初步方案</title>
-    <link>https://gjlsx.github.io/plans/pkm-quartz-initial-plan</link>
-    <guid>https://gjlsx.github.io/plans/pkm-quartz-initial-plan</guid>
+    <link>https://wiki.lovemoney.live/plans/pkm-quartz-initial-plan</link>
+    <guid>https://wiki.lovemoney.live/plans/pkm-quartz-initial-plan</guid>
     <description><![CDATA[ 個人任務與知識庫系統初步方案 日期：2026-05-02 1. ]]></description>
-    <pubDate>Sun, 03 May 2026 09:13:00 GMT</pubDate>
+    <pubDate>Wed, 06 May 2026 18:41:08 GMT</pubDate>
   </item><item>
-    <title>LoveTrueGlory</title>
-    <link>https://gjlsx.github.io/</link>
-    <guid>https://gjlsx.github.io/</guid>
-    <description><![CDATA[ 個人任務、知識整理與 Quartz 發佈入口 ]]></description>
-    <pubDate>Sun, 03 May 2026 09:13:00 GMT</pubDate>
+    <title>標籤與模板初稿</title>
+    <link>https://wiki.lovemoney.live/plans/pkm-tags-and-templates</link>
+    <guid>https://wiki.lovemoney.live/plans/pkm-tags-and-templates</guid>
+    <description><![CDATA[ 標籤與模板初稿 日期：2026-05-02 此文檔是 個人任務與知識庫系統初步方案 的配套文件，目的是先定義： 標籤文件怎麼寫 Obsidian 索引卡怎麼寫 任務文件怎麼寫 每日記錄怎麼寫 1. ]]></description>
+    <pubDate>Wed, 06 May 2026 18:41:08 GMT</pubDate>
   </item>
     </channel>
   </rss>
