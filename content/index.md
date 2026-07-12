@@ -11,7 +11,7 @@ description: 個人任務、知識整理與 Quartz 發佈入口
 
 - [PKM + Quartz 初步方案](./plans/pkm-quartz-initial-plan)
 - [標籤與模板初稿](./plans/pkm-tags-and-templates)
-- [Hermes Web Architectures](./hermes-web-architectures)
+- [Hermes Web Architectures](./plans/hermes-web-architectures)
 
 ## 說明
 
