@@ -16,19 +16,22 @@
  *   node tools/push-web.mjs ./dirxx root
  *   node tools/push-web.mjs ./dirav abc
  *
+ * Production publish model:
+ *   local public/ correct → git push → Cloudflare Worker auto-reads public/
+ *   No local wrangler login/deploy required.
+ *
  * Pipeline (default):
  *   1) copy into content/<dest>/  (content tree)
  *   2) update content/index.md links
  *   3) quartz build
  *   4) re-copy assets into public/ with real .html extensions
- *   5) git add / commit / push
- *   6) wrangler deploy  (needs `wrangler login` or CLOUDFLARE_API_TOKEN)
+ *   5) git add / commit / push  (Worker picks up public/ from git)
  *
  * Flags:
  *   --no-build    skip quartz build
- *   --no-deploy   skip wrangler deploy
  *   --no-push     skip git commit/push
  *   --no-index    do not edit content/index.md
+ *   --deploy      optional local wrangler deploy (NOT the normal path)
  *   --dry-run     print actions only
  *   -m, --message <msg>  commit message
  *   -h, --help
@@ -128,7 +131,8 @@ function normalizeDest(dest) {
 function parseArgs(argv) {
   const flags = {
     build: true,
-    deploy: true,
+    // Production: git push only. Local wrangler is opt-in emergency.
+    deploy: false,
     push: true,
     index: true,
     dryRun: false,
@@ -140,7 +144,8 @@ function parseArgs(argv) {
     const a = argv[i]
     if (a === "-h" || a === "--help") flags.help = true
     else if (a === "--no-build") flags.build = false
-    else if (a === "--no-deploy") flags.deploy = false
+    else if (a === "--deploy") flags.deploy = true
+    else if (a === "--no-deploy") flags.deploy = false // legacy alias
     else if (a === "--no-push") flags.push = false
     else if (a === "--no-index") flags.index = false
     else if (a === "--dry-run") flags.dryRun = true
@@ -153,7 +158,10 @@ function parseArgs(argv) {
 }
 
 function usage() {
-  return `push-web — publish a single page or directory to LoveTrueGlory
+  return `push-web — stage page/dir into content+public, then git push
+
+Production: Worker serves public/ from git after push.
+No local wrangler login required.
 
 Usage:
   node tools/push-web.mjs <src> [dest] [flags]
@@ -163,14 +171,13 @@ Arguments:
   dest   site path prefix (default: site root)
            omitted / root  → /file.html
            abc             → /abc/file.html
-           /abc            → /abc/file.html
          Note: bare "/" may be expanded by git-bash; prefer omit or "root".
 
 Flags:
   --no-build     skip quartz build
-  --no-deploy    skip wrangler deploy
   --no-push      skip git commit/push
   --no-index     do not update content/index.md
+  --deploy       optional local wrangler deploy (NOT normal path)
   --dry-run      show plan only
   -m, --message  git commit message
   -h, --help
@@ -415,9 +422,9 @@ async function main() {
     await copyFile(s.absSrc, s.publicDest, flags.dryRun)
   }
 
-  // 5) git commit + push (before deploy so local work is never lost on CF auth fail)
+  // 5) git commit + push — production path; Worker reads public/ from git
   if (flags.push) {
-    log("\n[5/6] git commit & push")
+    log("\n[5/5] git commit & push")
     const msg =
       flags.message ||
       `publish web: ${
@@ -429,7 +436,6 @@ async function main() {
         dest ||
         "assets"
       }`
-    // include CLI when present in tools/
     for (const p of ["content", "public", "tools/push-web.mjs"]) {
       await git(["add", "-A", "--", p], flags.dryRun)
     }
@@ -456,33 +462,31 @@ async function main() {
       }
     }
   } else {
-    log("\n[5/6] skip commit/push")
+    log("\n[5/5] skip commit/push")
   }
 
-  // 6) deploy
+  // optional local wrangler (NOT the normal production path)
   if (flags.deploy) {
-    log("\n[6/6] wrangler deploy")
+    log("\n[optional] local wrangler deploy (bypasses git→Worker; easy to hit wrong CF account)")
     if (flags.dryRun) log("  [dry-run] npm run deploy")
     else {
       try {
         await run("npm", ["run", "deploy"])
       } catch (err) {
-        log("\n✗ deploy failed (git already done if enabled)")
-        log("  fix: run `npx wrangler login` once, or set CLOUDFLARE_API_TOKEN")
-        log("  then: npm run deploy")
+        log("\n✗ local wrangler failed (git push may already be done)")
+        log("  production path does not need this; fix CF Git integration or use --deploy only as emergency")
         throw err
       }
     }
-  } else {
-    log("\n[6/6] skip deploy")
   }
 
   log("\n✓ done")
+  log("  production: Worker serves public/ from git after push")
   const urls = staged
     .filter((s) => s.isHtml)
     .map((s) => `${SITE}/${s.rel.replace(/\\/g, "/")}`)
   if (urls.length) {
-    log("live URLs (after successful deploy):")
+    log("expected live URLs (after Worker picks up git):")
     for (const u of urls) log(`  ${u}`)
   }
 }
