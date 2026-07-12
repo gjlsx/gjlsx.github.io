@@ -6,16 +6,15 @@
  *   node tools/push-web.mjs <src> [dest]
  *
  *   src   local .html file, or a directory of web files
- *   dest  site path prefix (default "/"):
- *           /          → /file.html
- *           abc        → /abc/file.html
- *           /abc/      → /abc/file.html
+ *   dest  site path prefix (default site root):
+ *           omitted/root → /file.html
+ *           abc          → /abc/file.html
  *
  * Examples:
  *   node tools/push-web.mjs ./page.html
  *   node tools/push-web.mjs ./page.html abc
- *   node tools/push-web.mjs ./dirxx /
- *   node tools/push-web.mjs ./dirav /abc
+ *   node tools/push-web.mjs ./dirxx root
+ *   node tools/push-web.mjs ./dirav abc
  *
  * Pipeline (default):
  *   1) copy into content/<dest>/  (content tree)
@@ -36,7 +35,6 @@
  */
 
 import fs from "node:fs/promises"
-import fsSync from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { spawn } from "node:child_process"
