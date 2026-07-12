@@ -11,15 +11,10 @@ description: 個人任務、知識整理與 Quartz 發佈入口
 
 - [PKM + Quartz 初步方案](./plans/pkm-quartz-initial-plan)
 - [標籤與模板初稿](./plans/pkm-tags-and-templates)
-
-
-## 一键发布页面
-
-- [Hermes Web Architectures](/hermes-web-architectures.html)
+- [Hermes Web Architectures](./hermes-web-architectures)
 
 ## 說明
 
 - 主庫：`G:\google\obsifiles\26todamoon`
 - 發佈庫：`F:\temp\lovetrueglory`
 - 原始來源數據：`D:\work\agents\dayplay\source`
-
