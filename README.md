@@ -32,7 +32,7 @@ git push
 
 ## 一键发单页 / 单目录
 
-脚本：[`tools/push-web.mjs`](./tools/push-web.mjs)  
+脚本：[`tools/push-web.mjs`](./tools/push-web.mjs)   .
 别名：`npm run push-web -- <src> [dest]`
 
 ### 用法
