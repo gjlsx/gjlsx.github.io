@@ -15,7 +15,7 @@ prof
 private/
 .replit
 replit.nix
-
+venv/
 tmp/
 
 .playwright-mcp/
